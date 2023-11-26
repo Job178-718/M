@@ -22,13 +22,6 @@ import android.provider.Settings
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import androidx.core.content.edit
-import splitties.systemservices.clipboardManager
-import splitties.systemservices.connectivityManager
-import splitties.systemservices.uiModeManager
-import java.io.File
-import java.io.FileOutputStream
 import kotlin.system.exitProcess
 
 inline fun <reified A : Activity> Context.startActivity(configIntent: Intent.() -> Unit = {}) {
@@ -36,10 +29,6 @@ inline fun <reified A : Activity> Context.startActivity(configIntent: Intent.() 
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     intent.apply(configIntent)
     startActivity(intent)
-}
-
-inline fun <reified T : Service> Context.startService(configIntent: Intent.() -> Unit = {}) {
-    startService(Intent(this, T::class.java).apply(configIntent))
 }
 
 inline fun <reified T : Service> Context.stopService() {

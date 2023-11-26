@@ -1,6 +1,5 @@
 package io.legado.app.help.coroutine
 
-import io.legado.app.utils.printOnDebug
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -171,7 +170,6 @@ class Coroutine<T>(
                 ensureActive()
                 success?.let { dispatchCallback(this, value, it) }
             } catch (e: Throwable) {
-                e.printOnDebug()
                 if (e is CancellationException && e !is ActivelyCancelException && isCancelled) {
                     this@Coroutine.cancel()
                 }

@@ -59,5 +59,10 @@ dependencies {
     implementation("com.louiscad.splitties:splitties-systemservices:3.0.0")
     implementation("com.louiscad.splitties:splitties-views:3.0.0")
 
+    //webServer
+    def nanoHttpdVersion = "2.3.1"
+    implementation("org.nanohttpd:nanohttpd:$nanoHttpdVersion")
+    implementation("org.nanohttpd:nanohttpd-websocket:$nanoHttpdVersion")
+
 
 }

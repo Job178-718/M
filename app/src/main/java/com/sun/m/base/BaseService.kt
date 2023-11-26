@@ -31,7 +31,6 @@ abstract class BaseService : LifecycleService() {
         super.onCreate()
         LifecycleUtils.onServiceCreate(this)
         checkNotificationPermission()
-        upNotification()
     }
 
     @CallSuper
@@ -52,13 +51,6 @@ abstract class BaseService : LifecycleService() {
     }
 
     /**
-     * 更新通知
-     */
-    open fun upNotification() {
-
-    }
-
-    /**
      * 检测通知权限
      */
     private fun checkNotificationPermission() {
@@ -67,7 +59,7 @@ abstract class BaseService : LifecycleService() {
             .rationale(R.string.notification_permission_rationale)
             .onGranted {
                 if (lifecycleScope.isActive) {
-                    upNotification()
+
                 }
             }
             .request()

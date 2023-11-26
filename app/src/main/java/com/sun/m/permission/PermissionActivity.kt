@@ -5,14 +5,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import io.legado.app.R
-import io.legado.app.exception.NoStackTraceException
-import io.legado.app.utils.toastOnUi
 
 class PermissionActivity : AppCompatActivity() {
 
@@ -46,10 +42,9 @@ class PermissionActivity : AppCompatActivity() {
                             Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
                         settingActivityResult.launch(settingIntent)
                     } else {
-                        throw NoStackTraceException("no MANAGE_ALL_FILES_ACCESS_PERMISSION")
+
                     }
                 } catch (e: Exception) {
-                    toastOnUi(e.localizedMessage)
                     RequestPlugins.sRequestCallback?.onError(e)
                     finish()
                 }
@@ -70,9 +65,6 @@ class PermissionActivity : AppCompatActivity() {
                 }
             }
         }
-        onBackPressedDispatcher.addCallback(this) {
-
-        }
     }
 
     private fun openSettingsActivity() {
@@ -81,7 +73,6 @@ class PermissionActivity : AppCompatActivity() {
             settingIntent.data = Uri.fromParts("package", packageName, null)
             settingActivityResult.launch(settingIntent)
         } catch (e: Exception) {
-            toastOnUi(R.string.tip_cannot_jump_setting_page)
             RequestPlugins.sRequestCallback?.onError(e)
             finish()
         }
@@ -123,26 +114,6 @@ class PermissionActivity : AppCompatActivity() {
             finish()
             return
         }
-        rationaleDialog = AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_title)
-            .setMessage(rationale)
-            .setPositiveButton(R.string.dialog_setting) { _, _ ->
-                onOk.invoke()
-            }
-            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
-                RequestPlugins.sRequestCallback?.onRequestPermissionsResult(
-                    permissions,
-                    IntArray(0)
-                )
-                finish()
-            }.setOnCancelListener {
-                RequestPlugins.sRequestCallback?.onRequestPermissionsResult(
-                    permissions,
-                    IntArray(0)
-                )
-                finish()
-            }
-            .show()
     }
 
     companion object {

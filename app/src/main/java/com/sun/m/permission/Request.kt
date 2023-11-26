@@ -13,11 +13,17 @@ import splitties.init.appCtx
 internal class Request : OnRequestPermissionsResultCallback {
 
     internal val requestTime: Long = System.currentTimeMillis()
+
     private var requestCode: Int = TYPE_REQUEST_PERMISSION
+
     private var permissions: ArrayList<String> = ArrayList()
+
     private var grantedCallback: OnPermissionsGrantedCallback? = null
+
     private var deniedCallback: OnPermissionsDeniedCallback? = null
+
     private var errorCallback: OnErrorCallback? = null
+
     private var rationale: CharSequence? = null
 
     private val deniedPermissions: Array<String>?
@@ -63,24 +69,7 @@ internal class Request : OnRequestPermissionsResultCallback {
             onPermissionsDenied(deniedPermissions)
             return
         }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            toSetting()
-        } else {
-            if (deniedPermissions.contains(Permissions.MANAGE_EXTERNAL_STORAGE)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    toManageFileSetting()
-                }
-            } else if (deniedPermissions.contains(Permissions.POST_NOTIFICATIONS)) {
-                toNotificationSetting()
-            } else if (deniedPermissions.size > 1) {
-                appCtx.startActivity<PermissionActivity> {
-                    putExtra(PermissionActivity.KEY_RATIONALE, rationale)
-                    putExtra(PermissionActivity.KEY_INPUT_REQUEST_TYPE, TYPE_REQUEST_PERMISSION)
-                    putExtra(PermissionActivity.KEY_INPUT_PERMISSIONS_CODE, requestCode)
-                    putExtra(PermissionActivity.KEY_INPUT_PERMISSIONS, deniedPermissions)
-                }
-            }
-        }
+
     }
 
     fun clear() {
@@ -139,30 +128,8 @@ internal class Request : OnRequestPermissionsResultCallback {
         RequestPlugins.sResultCallback?.onPermissionsDenied(deniedPermissions)
     }
 
-    private fun toSetting() {
-        appCtx.startActivity<PermissionActivity> {
-            putExtra(PermissionActivity.KEY_RATIONALE, rationale)
-            putExtra(PermissionActivity.KEY_INPUT_REQUEST_TYPE, TYPE_REQUEST_SETTING)
-        }
-    }
 
-    private fun toManageFileSetting() {
-        appCtx.startActivity<PermissionActivity> {
-            putExtra(PermissionActivity.KEY_RATIONALE, rationale)
-            putExtra(PermissionActivity.KEY_INPUT_REQUEST_TYPE, TYPE_MANAGE_ALL_FILES_ACCESS)
-            putExtra(PermissionActivity.KEY_INPUT_PERMISSIONS_CODE, requestCode)
-            putExtra(PermissionActivity.KEY_INPUT_PERMISSIONS, deniedPermissions)
-        }
-    }
 
-    private fun toNotificationSetting() {
-        appCtx.startActivity<PermissionActivity> {
-            putExtra(PermissionActivity.KEY_RATIONALE, rationale)
-            putExtra(PermissionActivity.KEY_INPUT_REQUEST_TYPE, TYPE_REQUEST_NOTIFICATIONS)
-            putExtra(PermissionActivity.KEY_INPUT_PERMISSIONS_CODE, requestCode)
-            putExtra(PermissionActivity.KEY_INPUT_PERMISSIONS, deniedPermissions)
-        }
-    }
 
     override fun onRequestPermissionsResult(
         permissions: Array<String>,
