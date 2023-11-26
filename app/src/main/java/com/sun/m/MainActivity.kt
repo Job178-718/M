@@ -10,15 +10,14 @@ import android.view.MenuItem
 import androidx.viewbinding.ViewBinding
 import com.sun.m.base.BaseActivity
 import com.sun.m.databinding.ActivityMainBinding
+import com.sun.m.utils.NetworkUtils
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //替换setContentView
-        ActivityMainBinding.inflate(layoutInflater)
+        binding.ipAddress.text = "eeeeeee"
     }
 
 

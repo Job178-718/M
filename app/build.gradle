@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'com.sun.m'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.sun.m"
         minSdk 30
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -32,6 +32,10 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
+    }
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
     }
 }
 
@@ -41,7 +45,19 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.lifecycle:lifecycle-compiler:2.6.2'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
+    //网络
+    implementation('com.squareup.okhttp3:okhttp:4.11.0')
+    implementation('cn.hutool:hutool-crypto:5.8.22')
+
+    //Splitties
+    implementation("com.louiscad.splitties:splitties-appctx:3.0.0")
+    implementation("com.louiscad.splitties:splitties-systemservices:3.0.0")
+    implementation("com.louiscad.splitties:splitties-views:3.0.0")
+
+
 }
