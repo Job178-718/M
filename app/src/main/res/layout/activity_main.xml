@@ -17,4 +17,5 @@
             tools:ignore="MissingConstraints"
             android:textColor="@color/black"/>
     </LinearLayout>
+
 </layout>

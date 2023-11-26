@@ -17,7 +17,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.ipAddress.text = "eeeeeee"
+        println(NetworkUtils.getLocalIPAddress())
     }
 
 

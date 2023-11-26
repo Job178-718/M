@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">M</string>
+    <string name="notification_permission_rationale">Reading requires sending notifications to show reading control and download progress</string>
 </resources>
