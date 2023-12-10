@@ -9,7 +9,9 @@ import java.io.IOException
 
 
 class AssetsWeb(rootPath: String) {
+
     private val assetManager: AssetManager = appCtx.assets
+
     private var rootPath = "web"
 
     init {

@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.PowerManager
 import android.util.Log
+import com.sun.m.Dao.FileDao
+import com.sun.m.MApplication
 import com.sun.m.base.BaseService
 import com.sun.m.receiver.NetworkChangedListener
 import com.sun.m.utils.NetworkUtils
@@ -18,6 +20,7 @@ class WebService : BaseService() {
 
     lateinit var webSocketServer:WebSocketServer
 
+
     private val wakeLock: PowerManager.WakeLock by lazy {
         powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "legado:webService")
             .apply {
@@ -30,7 +33,7 @@ class WebService : BaseService() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.e("WebService", "onCreate: binding")
+        networkChangedListener.register()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

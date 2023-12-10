@@ -19,6 +19,7 @@ import android.os.BatteryManager
 import android.os.Build
 import android.os.Process
 import android.provider.Settings
+import android.util.Log
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
@@ -152,6 +153,11 @@ val Context.navigationBarHeight: Int
 
 inline fun <reified T : Service> Context.startService(configIntent: Intent.() -> Unit = {}) {
     startService(Intent(this, T::class.java).apply(configIntent))
+}
+
+inline fun <reified T> logd(message: String) {
+    val tag = T::class.simpleName
+    Log.d(tag, message)
 }
 
 

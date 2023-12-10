@@ -4,14 +4,59 @@
         <meta charset="UTF-8" />
         <link rel="icon" href="./favicon.ico" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-      <script type="module" crossorigin src="./assets/index-a4be7e77.js"></script>
-      <link rel="modulepreload" crossorigin href="./assets/vendor-f0c50eaf.js">
-      <link rel="stylesheet" href="./assets/vendor-31f92e7c.css">
-      <link rel="stylesheet" href="./assets/index-a2df5179.css">
+      <link href="./assets/layui.css" rel="stylesheet">
+        <link href="./font/iconfont.svg" rel="stylesheet">
     </head>
-
     <body>
-        <div id="app"></div>
-        
-    </body>
+    <div class="layui-btn-container">
+        <button type="button" class="layui-btn demo-class-accept" id="file" lay-options="{accept: 'file'}">
+            <i class="layui-icon layui-icon-upload"></i>
+            上传文件
+        </button>
+        <button type="button" class="layui-btn demo-class-accept" lay-options="{
+    accept: 'file',
+    exts: 'zip|rar|7z'
+  }">
+            <i class="layui-icon layui-icon-upload"></i>
+            只允许压缩文件
+        </button>
+        <button type="button" class="layui-btn demo-class-accept" lay-options="{accept: 'video'}">
+            <i class="layui-icon layui-icon-upload"></i>
+            上传视频
+        </button>
+        <button type="button" class="layui-btn demo-class-accept" lay-options="{accept: 'audio'}">
+            <i class="layui-icon layui-icon-upload"></i>
+            上传音频
+        </button>
+    </div>
+
+    <!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+    <script src="./layui/layui.js"></script>
+    <script >
+          layui.use(function(){
+          var upload = layui.upload;
+          var layer = layui.layer;
+          var filename;
+          console.log('layui');
+          // 渲染
+          upload.render({
+            elem: '#file', // 绑定多个元素
+            url: '/upload/file', // 此处配置你自己的上传接口即可
+            accept: 'file', // 普通文件
+            done: function(res){
+              layer.msg('上传成功');
+              console.log(res);
+            },error: function(index, upload){
+                layer.msg('上传失败');
+            },before: function(obj){
+              obj.preview(function(index, file, result){
+              filename = file.name
+              console.log(filename);
+            });
+           }
+          });
+        });
+</script>
+
+</body>
 </html>
