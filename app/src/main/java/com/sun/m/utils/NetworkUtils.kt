@@ -1,19 +1,19 @@
 package com.sun.m.utils
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import cn.hutool.core.lang.Validator
 import okhttp3.internal.publicsuffix.PublicSuffixDatabase
 import splitties.systemservices.connectivityManager
-
 import java.net.InetAddress
 import java.net.NetworkInterface
 import java.net.SocketException
 import java.net.URL
 import java.util.*
 
-import cn.hutool.core.lang.Validator
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 object NetworkUtils {
@@ -197,5 +197,29 @@ object NetworkUtils {
     fun isIPAddress(input: String?): Boolean {
         return isIPv4Address(input) || isIPv6Address(input)
     }
+
+    //  判断手机的网络状态（是否联网）
+    fun getNetWorkInfo(context: Context): Int {
+        //网络状态初始值
+        var type = -1 //-1(当前网络异常，没有联网)
+        //通过上下文得到系统服务，参数为网络连接服务，返回网络连接的管理类
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        //通过网络管理类的实例得到联网日志的状态，返回联网日志的实例
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            ?: //状态为空当前网络异常，没有联网
+            return type
+        //判断联网日志是否为空
+        //不为空得到使用的网络类型
+        val type1 = activeNetworkInfo.type
+        type = when (type1) {
+            ConnectivityManager.TYPE_MOBILE -> 0
+            ConnectivityManager.TYPE_WIFI -> 1
+            else -> -1
+        }
+        //返回网络类型
+        return type
+    }
+
 
 }
